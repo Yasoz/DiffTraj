@@ -6,7 +6,6 @@ import datetime
 import matplotlib.pyplot as plt
 import os
 import torch.nn.functional as F
-from tqdm.notebook import tqdm
 from torch.utils.data import TensorDataset, DataLoader
 from types import SimpleNamespace
 from utils.config import args
