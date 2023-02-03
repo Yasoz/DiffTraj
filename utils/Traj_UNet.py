@@ -387,24 +387,3 @@ class Model(nn.Module):
         h = nonlinearity(h)
         h = self.conv_out(h)
         return h
-
-
-if __name__ == '__main__':
-    from config import args
-
-    temp = {}
-    for k, v in args.items():
-        temp[k] = SimpleNamespace(**v)
-
-    config = SimpleNamespace(**temp)
-    t = torch.tensor([50.], )
-    avg = torch.tensor([0.0])
-    total = torch.tensor([0.0])
-    depature = torch.tensor([0])
-    weekid = torch.tensor([0])
-    attr = [avg, total, depature, weekid]
-    unet = Model(config)
-    config.data.traj_length = 200
-    x = torch.randn(1, 2, 200)
-    out = unet(x, t, attr)
-    print(out.shape)
