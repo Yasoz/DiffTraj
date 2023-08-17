@@ -19,6 +19,8 @@ math
 
 3. Run and train the model by:
 
+   ```bash
    python main.py 
+   ```
 
 4. The code will save the trained model every 10 epoches
