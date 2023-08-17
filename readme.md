@@ -1,15 +1,15 @@
 #### Requirements
 
-python>-3.7
-torch>=1.7
-pandas
-numpy
-matplotlib
-pathlib
-shutil
-datetime
-colored
-math
+python>=3.7<br>
+torch>=1.7<br>
+pandas<br>
+numpy<br>
+matplotlib<br>
+pathlib<br>
+shutil<br>
+datetime<br>
+colored<br>
+math<br>
 
 #### Usage
 
