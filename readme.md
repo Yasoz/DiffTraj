@@ -31,4 +31,4 @@ Refer to Traj_Generation.ipynb file
 
 #### Generated result
 
-![Chengdu](Chengdu_traj.png)
+![Chengdu](./Chengdu_traj.png)
