@@ -170,7 +170,7 @@ def log_info(args, logger):
     logger.info('***********************************')
     logger.info("Dataset: {}".format(args.data.dataset))
     logger.info("Trajectory Length: {}".format(args.data.traj_length))
-
+    logger.info("Guidance scale: {}".format(args.model.guidance_scale))
     logger.info("Number of steps: {}".format(
         args.diffusion.num_diffusion_timesteps))
     logger.info("Beta_schedule: {}".format(args.diffusion.beta_schedule))

@@ -13,14 +13,16 @@ from utils.EMA import EMAHelper
 from utils.Traj_UNet import *
 from utils.logger import Logger, log_info
 from pathlib import Path
+import shutil
+
+
+# This code part from https://github.com/sunlin-ai/diffusion_tutorial
+
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-
-
-# This code part from https://github.com/sunlin-ai/diffusion_tutorial
 
 def gather(consts: torch.Tensor, t: torch.Tensor):
     """Gather consts for $t$ and reshape to feature map shape"""
@@ -38,11 +40,13 @@ def main(config, logger, exp_dir):
         return mean + (var**0.5) * eps, eps  # also returns noise
 
     # Create the model
-    unet = Model(config).cuda()
-    print(unet)
-    traj = np.load('xxxxxxxxx')
-    head = np.load('xxxxxxxxxx')
-    # change the axis of data
+    unet = Guide_UNet(config).cuda()
+    # print(unet)
+    traj = np.load('./xxxxxx',
+                   allow_pickle=True)
+    traj = traj[:, :, :2]
+    head = np.load('./xxxxxx',
+                   allow_pickle=True)
     traj = np.swapaxes(traj, 1, 2)
     traj = torch.from_numpy(traj).float()
     head = torch.from_numpy(head).float()
@@ -50,7 +54,7 @@ def main(config, logger, exp_dir):
     dataloader = DataLoader(dataset,
                             batch_size=config.training.batch_size,
                             shuffle=True,
-                            num_workers=4)
+                            num_workers=8)
 
     # Training params
     # Set up some parameters
@@ -83,7 +87,6 @@ def main(config, logger, exp_dir):
         for _, (trainx, head) in enumerate(dataloader):
             x0 = trainx.cuda()
             head = head.cuda()
-            # t = torch.randint(0, n_steps, (batch_size,), dtype=torch.long).cuda() # Random 't's
             t = torch.randint(low=0, high=n_steps,
                               size=(len(x0) // 2 + 1, )).cuda()
             t = torch.cat([t, n_steps - t - 1], dim=0)[:len(x0)]
@@ -119,12 +122,16 @@ if __name__ == "__main__":
         config.data.dataset, config.diffusion.num_diffusion_timesteps,
         config.data.traj_length, config.diffusion.beta_end,
         config.training.batch_size)
-    exp_dir = root_dir / "Experiments_result" / result_name
-
-    for d in ["results", "models", "logs"]:
+    exp_dir = root_dir / "DiffTraj" / result_name
+    for d in ["results", "models", "logs","Files"]:
         os.makedirs(exp_dir / d, exist_ok=True)
     print("All files saved path ---->>", exp_dir)
     timestamp = datetime.datetime.now().strftime("%m-%d-%H-%M-%S")
+    files_save = exp_dir / 'Files' / (timestamp + '/')
+    if not os.path.exists(files_save):
+        os.makedirs(files_save)
+    shutil.copy('./utils/config.py', files_save)
+    shutil.copy('./utils/Traj_UNet.py', files_save)
 
     logger = Logger(
         __name__,
