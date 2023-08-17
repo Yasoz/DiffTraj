@@ -20,6 +20,19 @@ def get_timestep_embedding(timesteps, embedding_dim):
     return emb
 
 
+class Attention(nn.Module):
+    def __init__(self, embedding_dim):
+        super(Attention, self).__init__()
+        self.fc = nn.Linear(embedding_dim, 1)
+
+    def forward(self, x):
+        # x shape: (batch_size, num_attributes, embedding_dim)
+        weights = self.fc(x)  # shape: (batch_size, num_attributes, 1)
+        # apply softmax along the attributes dimension
+        weights = F.softmax(weights, dim=1)
+        return weights
+
+
 class WideAndDeep(nn.Module):
     def __init__(self, embedding_dim=128, hidden_dim=256):
         super(WideAndDeep, self).__init__()
@@ -29,11 +42,10 @@ class WideAndDeep(nn.Module):
 
         # Deep part (neural network for categorical attributes)
         self.depature_embedding = nn.Embedding(288, hidden_dim)
-        self.sid_embedding = nn.Embedding(144, hidden_dim)
-        self.eid_embedding = nn.Embedding(144, hidden_dim)
+        self.sid_embedding = nn.Embedding(257, hidden_dim)
+        self.eid_embedding = nn.Embedding(257, hidden_dim)
         self.deep_fc1 = nn.Linear(hidden_dim*3, embedding_dim)
         self.deep_fc2 = nn.Linear(embedding_dim, embedding_dim)
-        self.norm1 = Normalize(embedding_dim)
 
     def forward(self, attr):
         # Continuous attributes
@@ -56,6 +68,7 @@ class WideAndDeep(nn.Module):
         deep_out = self.deep_fc2(deep_out)
         # Combine wide and deep embeddings
         combined_embed = wide_out + deep_out
+
         return combined_embed
 
 
@@ -394,6 +407,8 @@ class Guide_UNet(nn.Module):
         self.attr_dim = config.model.attr_dim
         self.guidance_scale = config.model.guidance_scale
         self.unet = Model(config)
+        # self.guide_emb = Guide_Embedding(self.attr_dim, self.ch)
+        # self.place_emb = Place_Embedding(self.attr_dim, self.ch)
         self.guide_emb = WideAndDeep(self.ch)
         self.place_emb = WideAndDeep(self.ch)
 
@@ -409,7 +424,7 @@ class Guide_UNet(nn.Module):
 
 
 if __name__ == '__main__':
-    from config import args
+    from NeurIPS.utils.config_WD import args
 
     temp = {}
     for k, v in args.items():
