@@ -1,16 +1,17 @@
 #### Requirements
-```bash
-python>=3.7<br>
-torch>=1.7<br>
-pandas<br>
-numpy<br>
-matplotlib<br>
-pathlib<br>
-shutil<br>
-datetime<br>
-colored<br>
-math<br>
-```
+You can install the required packages with the following version:
+
+      python>=3.7
+      torch>=1.7
+      pandas
+      numpy
+      matplotlib
+      pathlib
+      shutil
+      datetime
+      colored
+      math
+
 
 #### Train the trajectory generation model
 
