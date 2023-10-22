@@ -1,5 +1,5 @@
 #### Requirements
-You can install the required packages with the following version:
+You can install the required packages in your python environment by:
 
       python>=3.7
       torch>=1.7
