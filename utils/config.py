@@ -1,8 +1,8 @@
 args = {
     'data': {
         'dataset': 'Chengdu',
-        'path1': '/xxxxxxx',
-        'path2': '/xxxxxxx',
+        'traj_path1': '/xxxxxxx',
+        'head_path2': '/xxxxxxx',
         'traj_length': 200,
         'channels': 2,
         'uniform_dequantization': False,

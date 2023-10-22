@@ -424,7 +424,7 @@ class Guide_UNet(nn.Module):
 
 
 if __name__ == '__main__':
-    from NeurIPS.utils.config_WD import args
+    from utils.config_WD import args
 
     temp = {}
     for k, v in args.items():
