@@ -1,4 +1,5 @@
-#### Requirements
+### Requirements
+
 You can install the required packages in your python environment by:
 
       python>=3.7
@@ -12,8 +13,7 @@ You can install the required packages in your python environment by:
       colored
       math
 
-
-#### Train the trajectory generation model
+### Train the trajectory generation model
 
 1. Download the data with permission of using your own GPS trajectory data
 
@@ -27,10 +27,23 @@ You can install the required packages in your python environment by:
 
 4. The code will save the trained model every 10 epoches
 
-#### Usage for Trajectory Generation
+### Usage for Trajectory Generation
 
 Refer to Traj_Generation.ipynb file, we provide the fine-trained model (model.pt) simple guide infromation(heads.npy) example to explain how to generate trajectories.
 
-#### Generated result
+### Generated result
 
 ![Chengdu](./Chengdu_traj.png)
+
+### Reference
+
+If you use this code, please cite:
+
+```bibtex
+@inproceedings{zhu2023DiffTraj,
+    author = {Yuanshao Zhu, Yongchao Ye, Shiyao Zhang, Xiangyu Zhao and James, J.Q. Yu},
+    title = {DiffTraj: Generating GPS Trajectory with Diffusion Probabilistic Model},
+    booktitle = {Proceedings of the 37th Annual Conference on Neural Information Processing Systems},
+    year = {2023}
+}
+```
