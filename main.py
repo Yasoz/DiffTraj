@@ -50,6 +50,11 @@ def main(config, logger, exp_dir):
     traj = np.swapaxes(traj, 1, 2)
     traj = torch.from_numpy(traj).float()
     head = torch.from_numpy(head).float()
+    ###########################################################
+    # The input shape of traj and head list as follows:
+    # traj: [batch_size, 2, traj_length]   2: latitude and longitude
+    # head: [batch_size, 8]   8: departure_time, trip_distance,  trip_time, trip_length, avg_dis, avg_speed, start_id, end_id
+    ###########################################################
     dataset = TensorDataset(traj, head)
     dataloader = DataLoader(dataset,
                             batch_size=config.training.batch_size,

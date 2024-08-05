@@ -20,7 +20,7 @@ You can install the required packages in your python environment by:
 2. Change the corresponding paths in the config.py and main.py files
 
 3. Run and train the model by:
-
+   
    ```bash
    python main.py 
    ```
